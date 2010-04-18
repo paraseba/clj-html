@@ -1,6 +1,6 @@
 (ns clj-html.core
   (:use [clojure.contrib.def       :only (defvar- defmacro-)]
-        [clojure.contrib.str-utils :only (re-gsub)]
+        [clojure.contrib.string    :only (replace-re)]
         [clojure.contrib.except    :only (throwf)])
   (:load "core_utils"))
 
@@ -15,9 +15,9 @@
   [tag+]
   (let [[match tag-str id doted-classes] (re-matches tag+-lexer tag+)
         tag-attrs (if2 id doted-classes
-                    {:id id :class (re-gsub #"\." " " doted-classes)}
+                    {:id id :class (replace-re #"\." " " doted-classes)}
                     {:id id}
-                    {:class (re-gsub #"\." " " doted-classes)}
+                    {:class (replace-re #"\." " " doted-classes)}
                     {})]
     [tag-str tag-attrs]))
 
